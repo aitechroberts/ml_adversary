@@ -126,3 +126,60 @@ One vs all
 - So there's only 10 classifiers for each which scales linearly
 
 This is called ensemble methods where you use many classifiers
+
+#### Linear Classification
+Uses one or more hyperplanes as decision boundaries
+
+Insert equations here
+
+The a^T vector controls the orientation of the boundary which makes sense since it basically combines a ton of lines to make the hyperplane
+
+- SVMs are linear by design
+
+Naive Bayes Classifiers are also linear
+
+Insert equation here
+
+- at prediction time log() terms are fixed a and b in a^T * x + b = 0
+- values of x are indicator values in Bernoulli Native Bayes and counts in Multinomial
+
+K-Nearest Neighbors are nonlinear
+- but the decision boundary can be approximated as locally linear in specific locations
+- Adding neighbors becomes that degree polynomial drawing that hyperplane I believe, confirm that
+
+Definitely insert that picture here from slides
+
+Noise attack on convolutional neural networks
+- Take image not in training set, create an image of noise and scale it (multiply it) to .007 or 1/150. 
+- In the range of 0-255 of the pixels we have basically added 1-2, but it destroys the classifier and not it thinks the panda is a reddish, light brown gibbon
+
+Insert CAPTCHA defense example because it's a super cool use case.
+
+#### Why adversarial linear classification?
+
+Basically gives us intuitino to understand attacking and defending nonlinear classifiers
+
+## Attacks
+feature vectos x_i are 
+- not training data
+- are attack candidates that can be pushed to x_i + delta_x_i
+
+Attack vectors must be constrained because it's not an attack if you literally change the data
+
+### Attack Goals
+1. Targeted attack is to defeat just one point for any given reason like a SPAM email
+2. Reliability attacks just destroy the classifier
+
+Optimal policy on the attack depends on the steepness of the line, and which way to move depends on the a-vector
+
+Noise attack with absolute sum constraint results in the same attack vectors as the patch attack
+
+Noise attack with max constraint (l_inf)
+- you get a square around the point instead of a diamond using: max(abs(delta_x_i^1), (delta_x_i^2)) <= C
+
+Noise attack with Euclidean constraint (l_2), basically pythagorean theorem *at least in 2D for sure, idk about 3D
+- creates a circle
+- attack vector must be perpendicular to the boundary so delta_x_i is + or - k * a for some value k since it's in the direction of the a-vector
+
+### Defense
+You retrain by using original images and noisy images using the correct labels actually hardens the classifier. Could do this multiple times, but usually only one works. People can commonly only train the noise rather than the original image which is a bad move because then you could be attacked by just going back to the original.
