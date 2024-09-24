@@ -184,6 +184,40 @@ Noise attack with Euclidean constraint (l_2), basically pythagorean theorem *at 
 You retrain by using original images and noisy images using the correct labels actually hardens the classifier. Could do this multiple times, but usually only one works. People can commonly only train the noise rather than the original image which is a bad move because then you could be attacked by just going back to the original.
 
 
+
+# Random Forest Classifier
+
+
+## Decision Trees
+Suck but starting here leads to random forests
+
+Looks like separating via boundaries and creating quadrants and the like is similar to my thoughts about creating partial hyperplanes or changing hyperplanes dynamically based on ruling out specific classes
+
+Uncertainty is the number of bits (number of binary questions) to get from the top to the bottom
+
+First question should start with the highest probability of execution 
+- 1 Spade, 2 Hearts, 4 Clubs, 1 Diamond
+- Ask Club first, Then Heart, then ask either are you a Spade or are you a Diamond
+
+Entropy = Uncertainty for a general distribution
+**But the entropy of a dataset H(D) = sum(P(i)*log_2(1/P(i))) from i=1 to c  the weighted mean across all c classes**
+- In the above cards, it would be 1.75 bits
+
+Information gain of a Split is the amount it reduces entropy on average
+
+I = H(D) - (H(D_1)*Split_data/total_data + Other_side_of_split/total_data * H(D_2))
+
+### Training
+
+### Classifying
+
+### Choosing dimension and split
+
+## Random Forest Classifiers
+Usually the first you would try on many classification problems
+
+## How to Choose a Classifier
+
 # Neural Networks
 
 ## Neurons
@@ -235,5 +269,3 @@ S = comparison between y_i and s(o(u (x, theta_1, theta_2))) read as s is a func
     - Chain Rule 
     - Jacobian is a matrix of partial derivatives
 - Recursion for gradients is backpropagation
- 
-
