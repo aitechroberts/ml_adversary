@@ -107,7 +107,6 @@ In the eth epoch, it is common to set the steplength n = m/(e + n) where m and n
 
 n is the size of the step you're taking. Larger in the beginning, but smaller toward the end because if your step size is too big, you might skip the minimum.
 
-
 #### Validation and Testing
 - split training 70%, val 10%, test set 20%
 - for each choice of lambda, run SGD to find best parameters on training set
@@ -183,3 +182,58 @@ Noise attack with Euclidean constraint (l_2), basically pythagorean theorem *at 
 
 ### Defense
 You retrain by using original images and noisy images using the correct labels actually hardens the classifier. Could do this multiple times, but usually only one works. People can commonly only train the noise rather than the original image which is a bad move because then you could be attacked by just going back to the original.
+
+
+# Neural Networks
+
+## Neurons
+One neuron implements the calculation: o = F(w^T * x + b) same thing as a ^ T
+- x is input vector
+- w is weights vector and b is bias parameter
+- F is nonlinear activation function
+- o is output number
+
+Usual choice for F is ReLU (rectified linear unit): F(u) = max(0, u)
+
+### Binary Classifier of 2 Neurons
+Insert picture from lecture
+
+- Insert the x-vector into neuron activiation function F()  with weight_1 then do the same with weight_2
+
+Show decision space picture
+
+### Extend from Binary to Multiclass Classifier
+The equation goes up to subscript k for k-number of neurons
+
+Replace max of neuron outputs by **softmax** function s(o) to get probabilistic decisions instead of definitive classifications
+- Insert softmax activiation function picture
+
+O_k becomes a probability vector which can then be classified according to the highest probability
+
+#### Minibatch Stochastic Gradient Descent
+- Cost function is S(theta, x; lambda) = cross-entropy loss L + regularization summation across weights
+    - where theta is the parameter vector that includes all {(w_i, b_i)}
+    - Inside cross-entropy loss is y_i^T is the dot product with the log(1/minibatch) vector
+    - weights * weights transposed times (lambda/2)
+
+S(theta, x; lambda) is minimized by SGD in which each step is calculated with reference to a minibatch of the data set, not just one item
+- Most common to use a minibatch of value from the power of 2 such as (2,4,8,16,32,64, etc.)
+
+
+As with SVMs and other classifiers, we still have to properly prepocess the data to get meaningful features
+
+## Stacking Layers to get a neural network
+
+Add an input layer of neurons to generate the features that go to the original output layer. Any number of intermediate layers can be in between the input and output layers
+
+### Forward pass and backpropagation
+- Given parameters theta, a forward pass through the network represents prediction of s from x
+- Turns out, we can understand setting the parameters theta as training backpropagation
+
+S = comparison between y_i and s(o(u (x, theta_1, theta_2))) read as s is a function of o which is a function of u and theta_2 and u is a function of (x, theta_1)
+- With S, we want to take a step in the negative gradient direction to change the value of theta_2 to make a better value of theta_2, and the same thing with x and theta_1.
+    - Chain Rule 
+    - Jacobian is a matrix of partial derivatives
+- Recursion for gradients is backpropagation
+ 
+
