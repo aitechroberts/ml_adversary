@@ -269,3 +269,37 @@ S = comparison between y_i and s(o(u (x, theta_1, theta_2))) read as s is a func
     - Chain Rule 
     - Jacobian is a matrix of partial derivatives
 - Recursion for gradients is backpropagation
+
+#### Training Trick 1: Dropout to avoid overfitting
+- During training randomly drop neurons with fixed probability
+- Dropout prevents higher layers becoming too dependent on a small set of weights
+- No dropout during prediction because they've already been removed.
+
+Insert Picture here
+
+#### Training Trick 2: Gradient Scaling
+Taking steps down a gradient is not generally smooth
+**Momentum** smooths the trajectory  by taking a moving average of recent steps
+- Other gradient scaling techniques include Adagrad, RMSprop, and Adam
+
+#### When not to use a fully connected input layer
+- In image classification a fully connected input layer is pixel-oriented, but patterns aren't found in individual pixels
+
+#### Image Convolution: Pattern detection by image convolution
+- Take a grayscale image I with pixel value I_u,v at location (u,v)
+- And small "kernel" iage M with pixel value M_u,v
+
+Construct a new image N=conv(I,M). Then multiply I * M and sum all of the products
+
+Insert picture
+
+
+Stride and padding
+
+### Stacking Convolutional Layers
+The input convolutional layer is a simple pattern detector and next layer detects patterns of patterns and so on
+- The **receptive field** of a location in a block is set of pixels in the original image that influence that location
+    - aka what pixel in original field drives this decision. 1st layer shoud be very small receptive field whereas whole image should be receptive field as end.
+
+To shrink blocks, use a stride > 1, but you can also use pooling. Insert picture and is simple
+
