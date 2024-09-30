@@ -303,3 +303,75 @@ The input convolutional layer is a simple pattern detector and next layer detect
 
 To shrink blocks, use a stride > 1, but you can also use pooling. Insert picture and is simple
 
+## Taxonomy of Adversarial Attacks
+Security violation
+- Integrity = False Negatives, Availability = False Positive
+
+Noise attack with max constraint (l_inf)
+Add or subtract C from either dimension, and the information to add or subtract is found in the sign(a) vector minute 26-30 ish
+
+## Extend Ideas of constrained noise attack from linear case to Neural Networks
+Again, since pixels are basically 0-255, that's basically adding or subtracting 1 for adding noise
+
+### Problem 1: Nonlinearity
+NNs have nonlinear components: Ex: Softmax or activation functions like RELU
+- But RELU is piecewise linear and other functions are approximately linear locally
+- NN decision space is locally linear, making noise attacks possible
+
+### Problem 2: Finding direction to attack
+Linear boundary is a^T * x + b = 0, then direction of attack is:
+- + or - a for Euclidean constraint (l_2)
+- + or - sign(a) for max constraint(l_inf)
+
+In NN given x_i, we will examine gradients loss using .... minute 38
+
+#### Revising backpropagation:
+- Recall training NN by fixing training data set {(x_i,y_i)}
+- Finding parameters theta that minizes loss function (ex: cross-entropy loss)
+
+#### Attacking trained model with backpropagation
+Now, model parameters theta are fixed
+- We move the data point x_i in order to **maximize** the loss function
+
+Open Box attack because we have access to the model
+
+epison value is the magnitude of the attack. Unlike + or - 32 in HW, epsilon is between 0 and 1
+
+- If an item is already misclassified by the classifier, we ignore it because why mess with it?
+
+FGSM attack code, takes in image (Tensor object kinda with metadat), target is target label
+- nll is negative_log_likelihood. Just a random loss function
+- initialize gradients as 0
+- do backpropagation with .backward()
+- take gradient, compute sign
+- then create modified image
+- Ensure image is still valid image with torch.clamp(x,0,1) to stay within 0 to 1
+
+#### Iterative method
+Take many steps by iteration the following update to x_i: x_i = clip of set (x_i + alpha * sign(gradient))
+- The clip function keeps each feature of x_i within the set of its original value, between min and max allowable values
+- Can outperform FGSM where loss function is nonconvex
+
+#### Targeted iterative method
+Suppose we want to move x_i so that is specifically has label y_target
+- Must minimize the loss funtion of L_i(theta, x_i, y_target)
+- Clip becomes x_i = clip of set (x_i - alpha * sign(gradient))
+
+### From Open to Closed box attacks
+Naturally open because backprop requires information about model structure
+- Experiments show that adversarial examples are **transferable**
+    - Examples found in one model often work against another model even if models are trained on different subsets of the same training data
+    - Why? Today's models approximate linear modles locally so the decision boundaries get quite similar
+
+Reverse Engineering attack to build a replica
+- We can do the same thing we did to the spam filter to a public neural network classifier to turn open box into closed box
+
+Defenses against evasion attacks
+- Iterative retraining
+    - Train the model
+    - Create many adversarial examples (benefits from FGSM being fast)
+    - Add them to training set and retrain
+    - Iterate if desired
+- Incorporate FGSM into the loss function for training
+    - Cool little thought project to multiply original loss function by weight alpha, then multiply the loss function of perturbed examples with (1-alpha)
+
