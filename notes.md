@@ -375,3 +375,66 @@ Defenses against evasion attacks
 - Incorporate FGSM into the loss function for training
     - Cool little thought project to multiply original loss function by weight alpha, then multiply the loss function of perturbed examples with (1-alpha)
 
+
+# Regression Problem
+Given set of feature vectors x_i where each has numerical label y_i, we want to train a model that can map unlabeled vectors to numerical values
+- Can think of regression as fitting a line to data
+
+Regression is like classification except that prediction target is number and not class label which apparently changes everything
+
+Feature vectors are now **explanatory variables** and y (labels) are the **dependent variables**
+
+## Linear model
+Begin by modeling y as a linear function of x^(j) plus randomness
+- This is the normal y = x * Beta + Error that you're familar with
+    - Error is a zero-mean random variable tha represents model error
+- Vector notation basically the exact same except its x.T * Beta_vector + Error rather than a.T * x_vector + bias
+
+Since Y is not a vector basically like the label vectors except this is numbers you get
+||Error||^2 = E.T * E =  (y_vector- x * Beta_vector).T * (y-X * Beta)
+- And you choose Beta to minimize the errors
+Differentiate wrt Beta and set to zero
+- and you get this X.T * X * Beta_vector - X.T * y_vector = 0
+If X.T * X is invertible,
+- you get Beta^hat = (X.T * X)^(-1) * X.T * y_vector
+
+### Constant offset
+Mathematically, we can add Beta_0 as a constant to offset for when all x = 0 because Error doesn't act as that apparently
+
+So we but Beta_0 at the top of the Beta_vector and we add a 1 at the beginning of the x_vector like [1 x(1) x(2)]
+so that you pretty much multiply Beta_0 * 1 so you get Beta_0
+- Basically adding a column of 1's on the on the far left column of X
+
+### Evaluating models using R-squared
+Variance of all of the components (y, x.T*Beta, and Error)
+so we get R^2 = var(x.T*Beta)/var(y)
+
+## Transforming variables to find a linear fitting
+Could take natural log, cube, do whatever you want to the variables
+
+Problems: 
+1. Could overfit because it's not obvious how to transform the explanatory variables
+2. Linear regression model parameters are very sensitive to outliers
+
+## Avoid Overfitting
+Methods
+1. Validation: Use validation set to choose transformed explanatory variables but # of combinations is exponential in # of variables
+2. Regularization: 
+
+### Regularization
+In OLS, cost function was ||e||^2
+
+In regularized least squares, add complexity penalty weighted by lambda, known as **ridge regression**
+
+e.T * e + lambda * ||Beta||^2 = (y - X*Beta) + lambda * Beta.T * Beta
+
+### Training with RLS
+Differentiate cost function wrt Beta and set to zero gives (X.T * X + lambda * I) *  Beta - X.T * y_vector = 0
+    - (X.T * X + lambda * I) Always invertible
+
+
+
+
+
+
+
