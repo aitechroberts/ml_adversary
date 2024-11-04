@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "py3.10-ML-ENV"
+version = "0.1.0"
+description = ""
+authors = ["None,n"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pyspark = "^3.5.3"
+tensorflow = "^2.17.0"
+torch = "^2.4.1"
+torchvision = "^0.19.1"
+torchaudio = "^2.4.1"
+kaggle = "^1.6.17"
+matplotlib = "^3.9.2"
+pandas = "^2.2.3"
+ipykernel = "^6.29.5"
+
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

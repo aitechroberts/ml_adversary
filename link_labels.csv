@@ -1,0 +1,29 @@
+Link
+Atlanta->Houston
+Atlanta->Indianapolis
+Atlanta->Washington
+Chicago->Indianapolis
+Chicago->New York City
+Denver->Kansas City
+Denver->Sunnyvale
+Denver->Seattle
+Houston->Atlanta
+Houston->Kansas City
+Houston->Los Angeles
+Indianapolis->Atlanta
+Indianapolis->Chicago
+Indianapolis->Kansas City
+Kansas City->Denver
+Kansas City->Houston
+Kansas City->Indianapolis
+Los Angeles->Houston
+Los Angeles->Sunnyvale
+New York City->Chicago
+New York City->Washington
+Sunnyvale->Denver
+Sunnyvale->Los Angeles
+Sunnyvale->Seattle
+Seattle->Denver
+Seattle->Sunnyvale
+Washington->Atlanta
+Washington->New York City

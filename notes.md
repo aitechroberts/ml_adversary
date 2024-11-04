@@ -7,8 +7,6 @@ First standardize the data to prevent the absolute values of a given feature to 
 Biggest problem is that you have to calculate the distance for all the vectors in relation to each other so the complexity grows linearly for each feature vector
 
 ## Evaluation
-
-
 # Support Vector Machines
 
 Said earlier that 0-1 loss function was all the same
